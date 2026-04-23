@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="ro">
+<head>
+    <meta charset="UTF-8">
+    <title>Login - Pink Travel</title>
+</head>
+<body bgcolor="#FFF5F8">
+    <center>
+        <h1 title="Titlu Principal">Pink Travel</h1>
+        <hr>
+        <h2>Autentificare</h2>
+
+        <table border="2" width="400" bgcolor="#FFF0F5" align="center">
+            <tr>
+                <th>Introduceti datele de logare</th>
+            </tr>
+            <tr>
+                <td>
+                    <form action="/login" method="POST">
+                        <fieldset>
+                            <legend>Logare</legend>
+                            <p>
+                                Email:<br>
+                                <input type="email" name="email" required size="30">
+                            </p>
+                            <p>
+                                Parolă:<br>
+                                <input type="password" name="password" required size="30">
+                            </p>
+                            <input type="submit" value="Intra in cont">
+                        </fieldset>
+                    </form>
+                    
+                    <% if(typeof error !== 'undefined' && error) { %>
+                        <p style="color: red;"><b><%= error %></b></p>
+                    <% } %>
+                </td>
+            </tr>
+        </table>
+
+        <br>
+        <p>Nu ai cont? <a href="/register">Înregistrează-te aici</a></p>
+        <p><a href="/">Înapoi la pagina principală</a></p>
+
+    </center>
+</body>
+</html>

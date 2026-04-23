@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="ro">
+<head>
+    <meta charset="UTF-8">
+    <title>Înregistrare - Pink Travel</title>
+</head>
+<body bgcolor="#FFF5F8">
+    <center>
+        <h1>Pink Travel</h1>
+        <h2>Creare Cont Nou</h2>
+        
+        <table border="2" width="50%" bgcolor="#FFF0F5">
+            <tr>
+                <td>
+                    <form action="/register" method="POST">
+                        <fieldset>
+                            <legend>Date Înregistrare</legend>
+                            <p>Prenume: <input type="text" name="firstName" required></p>
+                            <p>Email: <input type="email" name="email" required></p>
+                            <p>Parolă: <input type="password" name="password" required></p>
+                            <input type="submit" value="Creează Cont">
+                        </fieldset>
+                    </form>
+                    <% if(error) { %> <p style="color:red"><%= error %></p> <% } %>
+                </td>
+            </tr>
+        </table>
+        <br>
+        <a href="/">Înapoi la Home</a>
+    </center>
+</body>
+</html>

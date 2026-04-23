@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="ro">
+<head>
+    <meta charset="UTF-8">
+    <title>Pink Travel - Dashboard</title>
+</head>
+<body bgcolor="#FFF5F8">
+    <center>
+        <h1>Pink Travel</h1>
+        <h3>Salut, <%= user.firstName %>!</h3>
+        <p>Vizite în această sesiune: <%= views %></p>
+        <p>Ultima destinație vizualizată: <b><%= ultima %></b></p>
+    </center>
+
+    <h2>Destinații Populare</h2>
+    <table border="1" width="80%" bgcolor="#FFF0F5" align="center">
+        <tr bgcolor="#FFC0CB"><th>Locație</th><th>Regiune</th><th>Acțiune</th></tr>
+        <% destinatii.forEach(d => { %>
+            <tr>
+                <td><strong><%= d.nume %></strong></td>
+                <td><%= d.regiune %></td>
+                <td><a href="/travel/detalii/<%= d.id %>">Vezi Detalii</a></td>
+            </tr>
+        <% }) %>
+    </table>
+    <br>
+    <center><a href="/logout">Logout</a></center>
+</body>
+</html>
