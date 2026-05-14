@@ -1,5 +1,5 @@
 module.exports = [
-    { id: 1, nume: "Paris", regiune: "Europa", detalii: "Orașul Iubirii", pret: "500€" },
-    { id: 2, nume: "Sardinia", regiune: "Europa", detalii: "Apa de cristal", pret: "800€" },
-    { id: 3, nume: "Madagascar", regiune: "Exotic", detalii: "Natură sălbatică", pret: "1500€" }
+    { id: 1, nume: "Paris", descriere: "Orașul iubirii.", pret: "500€" },
+    { id: 2, nume: "Maldive", descriere: "Plaje exotice.", pret: "1500€" },
+    { id: 3, nume: "Sardinia", descriere: "Destinație superbă în Italia.", pret: "800€" }
 ];

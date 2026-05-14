@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="ro">
+<head>
+    <meta charset="UTF-8">
+    <title>Pink Travel - Destinatiile Tale</title>
+    <style>
+        body { background: #FFF5F8; font-family: 'Segoe UI', sans-serif; padding: 20px; }
+        .tabel-destinatii {
+            width: 100%; max-width: 800px; margin: auto;
+            border-collapse: collapse; background: white;
+            box-shadow: 10px 10px 0px #FFB6C1; border: 2px solid #FF69B4;
+        }
+        th { background: #FF69B4; color: white; padding: 15px; text-transform: uppercase; }
+        td { border-bottom: 1px solid #FFB6C1; padding: 15px; text-align: center; }
+        .welcome { text-align: center; color: #FF1493; margin-bottom: 30px; }
+    </style>
+</head>
+<body>
+    <div class="welcome">
+        <h1>Bine ai venit, <%= userName %>!</h1>
+        <p>Iata ofertele tale personalizate pentru vacanta:</p>
+    </div>
+
+    <table class="tabel-destinatii">
+        <thead>
+            <tr>
+                <th>Destinatie</th>
+                <th>Descriere</th>
+                <th>Pret</th>
+            </tr>
+        </thead>
+        <tbody>
+            <% destinatii.forEach(function(item) { %>
+                <tr>
+                    <td><strong><%= item.nume %></strong></td>
+                    <td><%= item.descriere %></td>
+                    <td style="color: #FF1493; font-weight: bold;"><%= item.pret %></td>
+                </tr>
+            <% }); %>
+        </tbody>
+    </table>
+
+    <center style="margin-top: 30px;">
+        <a href="/logout" style="color: #FF69B4;">Paraseste terminalul (Logout)</a>
+    </center>
+</body>
+</html>

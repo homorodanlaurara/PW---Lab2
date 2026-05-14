@@ -2,46 +2,45 @@
 <html lang="ro">
 <head>
     <meta charset="UTF-8">
-    <title>Login - Pink Travel</title>
+    <title>Pink Travel - Login</title>
+    <style>
+        body { background: #FFC0CB; font-family: 'Courier New', Courier, monospace; display: flex; align-items: center; justify-content: center; min-height: 100vh; margin: 0; }
+        .pasaport-box {
+            background: #fff; width: 380px; padding: 40px; border-radius: 5px 20px 20px 5px;
+            border-left: 25px solid #FF1493; box-shadow: 15px 15px 0px rgba(0,0,0,0.1);
+        }
+        h2 { color: #FF1493; border-bottom: 2px dashed #FF1493; padding-bottom: 10px; text-transform: uppercase; }
+        .camp { margin-bottom: 25px; }
+        label { display: block; font-weight: bold; margin-bottom: 5px; color: #555; }
+        input {
+            width: 100%; border: 1px solid #ddd; padding: 12px; border-radius: 4px;
+            box-sizing: border-box; outline: none; background: #FFF5F8;
+        }
+        input:focus { border-color: #FF1493; box-shadow: 0 0 5px #FFB6C1; }
+        .btn-validare {
+            background: #FF1493; color: white; border: none; width: 100%; padding: 15px;
+            font-weight: bold; cursor: pointer; border-radius: 4px; text-transform: uppercase;
+        }
+        .link-mic { display: block; text-align: center; margin-top: 20px; color: #888; text-decoration: none; font-size: 0.9em; }
+    </style>
 </head>
-<body bgcolor="#FFF5F8">
-    <center>
-        <h1 title="Titlu Principal">Pink Travel</h1>
-        <hr>
-        <h2>Autentificare</h2>
-
-        <table border="2" width="400" bgcolor="#FFF0F5" align="center">
-            <tr>
-                <th>Introduceti datele de logare</th>
-            </tr>
-            <tr>
-                <td>
-                    <form action="/login" method="POST">
-                        <fieldset>
-                            <legend>Logare</legend>
-                            <p>
-                                Email:<br>
-                                <input type="email" name="email" required size="30">
-                            </p>
-                            <p>
-                                Parolă:<br>
-                                <input type="password" name="password" required size="30">
-                            </p>
-                            <input type="submit" value="Intra in cont">
-                        </fieldset>
-                    </form>
-                    
-                    <% if(typeof error !== 'undefined' && error) { %>
-                        <p style="color: red;"><b><%= error %></b></p>
-                    <% } %>
-                </td>
-            </tr>
-        </table>
-
-        <br>
-        <p>Nu ai cont? <a href="/register">Înregistrează-te aici</a></p>
-        <p><a href="/">Înapoi la pagina principală</a></p>
-
-    </center>
+<body>
+    <div class="pasaport-box">
+        <h2>Control Frontiera</h2>
+        <p>Introdu datele pentru acces:</p>
+        <form action="/login" method="POST">
+            <div class="camp">
+                <label>Email Calator:</label>
+                <input type="email" name="email" required placeholder="email@travel.com">
+            </div>
+            <div class="camp">
+                <label>Cod Acces (Parola):</label>
+                <input type="password" name="password" required placeholder="******">
+            </div>
+            <button type="submit" class="btn-validare">Valideaza Accesul</button>
+        </form>
+        <a href="/register" class="link-mic">Nu am cont, vreau pasaport</a>
+        <a href="/" class="link-mic">Inapoi la start</a>
+    </div>
 </body>
 </html>

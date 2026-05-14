@@ -2,31 +2,52 @@
 <html lang="ro">
 <head>
     <meta charset="UTF-8">
-    <title>Înregistrare - Pink Travel</title>
+    <title>Pink Travel - Register</title>
+    <style>
+        body { background: #FFB6C1; font-family: 'Courier New', Courier, monospace; display: flex; align-items: center; justify-content: center; min-height: 100vh; margin: 0; }
+        .cerere-box {
+            background: #fff; width: 400px; padding: 40px; border-radius: 20px;
+            border: 3px double #FF1493; position: relative;
+        }
+        .stampila {
+            position: absolute; top: -10px; right: -10px; background: white; 
+            border: 3px solid #FF1493; color: #FF1493; padding: 10px; 
+            transform: rotate(10deg); font-weight: bold; border-radius: 5px;
+        }
+        h2 { color: #FF1493; text-align: center; text-transform: uppercase; }
+        .camp { margin-bottom: 20px; }
+        label { display: block; font-weight: bold; margin-bottom: 5px; }
+        input {
+            width: 100%; border: 1px solid #ccc; padding: 10px; border-radius: 4px;
+            box-sizing: border-box; background: #fafafa;
+        }
+        .btn-inregistrare {
+            background: #FF1493; color: white; border: none; width: 100%; padding: 15px;
+            font-weight: bold; cursor: pointer; border-radius: 4px; margin-top: 10px;
+        }
+        .link-mic { display: block; text-align: center; margin-top: 15px; color: #888; text-decoration: none; }
+    </style>
 </head>
-<body bgcolor="#FFF5F8">
-    <center>
-        <h1>Pink Travel</h1>
-        <h2>Creare Cont Nou</h2>
-        
-        <table border="2" width="50%" bgcolor="#FFF0F5">
-            <tr>
-                <td>
-                    <form action="/register" method="POST">
-                        <fieldset>
-                            <legend>Date Înregistrare</legend>
-                            <p>Prenume: <input type="text" name="firstName" required></p>
-                            <p>Email: <input type="email" name="email" required></p>
-                            <p>Parolă: <input type="password" name="password" required></p>
-                            <input type="submit" value="Creează Cont">
-                        </fieldset>
-                    </form>
-                    <% if(error) { %> <p style="color:red"><%= error %></p> <% } %>
-                </td>
-            </tr>
-        </table>
-        <br>
-        <a href="/">Înapoi la Home</a>
-    </center>
+<body>
+    <div class="cerere-box">
+        <div class="stampila">CERERE NOUA</div>
+        <h2>Inregistrare Calator</h2>
+        <form action="/register" method="POST">
+            <div class="camp">
+                <label>Prenume:</label>
+                <input type="text" name="firstName" required placeholder="Introdu..">
+            </div>
+            <div class="camp">
+                <label>Email Oficial:</label>
+                <input type="email" name="email" required placeholder="email@travel.com">
+            </div>
+            <div class="camp">
+                <label>Seteaza Parola:</label>
+                <input type="password" name="password" required placeholder="Minim 6 caractere">
+            </div>
+            <button type="submit" class="btn-inregistrare">Emite Pasaportul</button>
+        </form>
+        <a href="/login" class="link-mic">Am deja pasaport, merg la login</a>
+    </div>
 </body>
 </html>

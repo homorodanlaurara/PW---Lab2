@@ -1,12 +1,49 @@
 <!DOCTYPE html>
-<html>
-<head><title>Home</title></head>
+<html lang="ro">
+<head>
+    <meta charset="UTF-8">
+    <title>Pink Travel - Start</title>
+    <style>
+        body { background-color: #FFF5F8; font-family: 'Segoe UI', Tahoma, sans-serif; margin: 0; padding: 20px; }
+        .bilet {
+            background: white; border: 2px solid #FF69B4; max-width: 700px; margin: 50px auto;
+            position: relative; border-radius: 10px; box-shadow: 10px 10px 0px #FFB6C1; overflow: hidden;
+        }
+        .header-bilet { background: #FF69B4; color: white; padding: 20px; text-align: center; }
+        .titlu-mare { font-size: 3em; margin: 0; text-transform: uppercase; letter-spacing: 5px; }
+        .continut { padding: 30px; text-align: center; }
+        .foto-polaroid {
+            background: white; padding: 10px 10px 30px 10px; border: 1px solid #ddd;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1); transform: rotate(-3deg);
+            display: inline-block; margin: 20px 0;
+        }
+        .btn-aventura {
+            display: inline-block; padding: 15px 25px; margin: 10px; border: 2px solid #FF69B4;
+            color: #FF69B4; text-decoration: none; font-weight: bold; border-radius: 5px;
+            transition: 0.3s; text-transform: uppercase;
+        }
+        .btn-aventura:hover { background: #FF69B4; color: white; transform: scale(1.05); }
+    </style>
+</head>
 <body>
-    <h1>Pink Travel</h1>
-    <p>SERVERUL FUNCTIONEAZA!!!!!!!!!!</p>
-    <a href="/login">Login</a> | <a href="/register">Inregistrare</a>
-    
-    <hr>
-    <h6>Am ales acest proiect deoarece îmi plac călătoriile.</h6>
+    <div class="bilet">
+        <div class="header-bilet">
+            <h1 class="titlu-mare">Pink Travel</h1>
+        </div>
+        <div class="continut">
+            <p>Gata de plecare?</p>
+            
+            <div class="foto-polaroid">
+                <img src="/insula.jpg" alt="Destinatie" width="300">
+                <p style="margin: 10px 0 0 0; color: #888; font-family: cursive;">Vedere de vis...</p>
+            </div>
+
+            <div style="margin-top: 30px;">
+                <a href="/login" class="btn-aventura">Check-in (Login)</a>
+                <a href="/register" class="btn-aventura">Pasaport Nou (Register)</a>
+            </div>
+            <p style="margin-top: 40px; font-size: 0.8em; color: #aaa;">Am ales acest proiect pentru ca imi plac calatoriile.</p>
+        </div>
+    </div>
 </body>
 </html>

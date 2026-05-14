@@ -9,7 +9,9 @@ router.get('/register', (req, res) => res.render('register', { error: null }));
 
 router.post('/register', (req, res) => {
     const { email, firstName, password } = req.body;
-    if (users.find(u => u.email === email)) return res.render('register', { error: "Email deja folosit!" });
+    if (users.find(u => u.email === email)) {
+        return res.render('register', { error: "Email deja folosit!" });
+    }
     
     const newUser = { email, firstName, password: getHash(password) };
     users.push(newUser);
@@ -23,16 +25,22 @@ router.post('/login', (req, res) => {
     const user = users.find(u => u.email === email && u.password === getHash(password));
     
     if (user) {
-        req.session.user = user;
+        //salvam datele separat in sesiune pentru a fi usor de accesat
+        req.session.userId = user.email;
+        req.session.userName = user.firstName; 
+        
+        if (!req.session.viewCount) {
+            req.session.viewCount = 0;
+        }
+
         res.redirect('/travel/protected');
     } else {
-        res.render('login', { error: "Email sau parolă incorectă!" });
+        res.render('login', { error: "Email sau parola incorecta!" });
     }
 });
 
 router.get('/logout', (req, res) => {
     req.session.destroy();
-    res.clearCookie('ultima_vizualizata');
     res.redirect('/');
 });
 
