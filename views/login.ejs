@@ -5,22 +5,14 @@
     <title>Pink Travel - Login</title>
     <style>
         body { background: #FFC0CB; font-family: 'Courier New', Courier, monospace; display: flex; align-items: center; justify-content: center; min-height: 100vh; margin: 0; }
-        .pasaport-box {
-            background: #fff; width: 380px; padding: 40px; border-radius: 5px 20px 20px 5px;
-            border-left: 25px solid #FF1493; box-shadow: 15px 15px 0px rgba(0,0,0,0.1);
-        }
-        h2 { color: #FF1493; border-bottom: 2px dashed #FF1493; padding-bottom: 10px; text-transform: uppercase; }
+        .pasaport-box { background: #fff; width: 380px; padding: 40px; border-radius: 5px 20px 20px 5px; border-left: 25px solid #FF1493; box-shadow: 15px 15px 0px rgba(0,0,0,0.1); }
+        h2 { color: #FF1493; border-bottom: 2px dashed #FF1493; padding-bottom: 10px; text-transform: uppercase; margin-top: 0; }
         .camp { margin-bottom: 25px; }
         label { display: block; font-weight: bold; margin-bottom: 5px; color: #555; }
-        input {
-            width: 100%; border: 1px solid #ddd; padding: 12px; border-radius: 4px;
-            box-sizing: border-box; outline: none; background: #FFF5F8;
-        }
-        input:focus { border-color: #FF1493; box-shadow: 0 0 5px #FFB6C1; }
-        .btn-validare {
-            background: #FF1493; color: white; border: none; width: 100%; padding: 15px;
-            font-weight: bold; cursor: pointer; border-radius: 4px; text-transform: uppercase;
-        }
+        input { width: 100%; border: 1px solid #ddd; padding: 12px; border-radius: 4px; box-sizing: border-box; outline: none; background: #FFF5F8; font-family: 'Courier New', monospace; }
+        input:focus { border-color: #FF1493; }
+        .btn-validare { background: #FF1493; color: white; border: none; width: 100%; padding: 15px; font-weight: bold; cursor: pointer; border-radius: 4px; text-transform: uppercase; font-family: 'Courier New', monospace; font-size: 1.1em; }
+        .btn-validare:hover { background: #FF1493; opacity: 0.9; }
         .link-mic { display: block; text-align: center; margin-top: 20px; color: #888; text-decoration: none; font-size: 0.9em; }
     </style>
 </head>
@@ -28,17 +20,24 @@
     <div class="pasaport-box">
         <h2>Control Frontiera</h2>
         <p>Introdu datele pentru acces:</p>
+        
         <form action="/login" method="POST">
             <div class="camp">
                 <label>Email Calator:</label>
                 <input type="email" name="email" required placeholder="email@travel.com">
             </div>
             <div class="camp">
-                <label>Cod Acces (Parola):</label>
+                <label>Parola:</label>
                 <input type="password" name="password" required placeholder="******">
             </div>
+            
             <button type="submit" class="btn-validare">Valideaza Accesul</button>
         </form>
+        
+        <% if(typeof error !== 'undefined' && error) { %>
+            <p style="color: red; text-align: center; font-weight: bold; margin-top: 15px;"><%= error %></p>
+        <% } %>
+
         <a href="/register" class="link-mic">Nu am cont, vreau pasaport</a>
         <a href="/" class="link-mic">Inapoi la start</a>
     </div>

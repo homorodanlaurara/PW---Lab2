@@ -3,22 +3,32 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Pink Travel - Itinerar</title>
+    <title>Pink Travel - Destinatiile Tale</title>
+    
     <style>
         body { background-color: #FFF5F8; font-family: 'Segoe UI', sans-serif; margin: 0; padding: 20px; color: #4A4A4A; }
-        .container { max-width: 900px; margin: 0 auto; background: white; padding: 30px; border-radius: 20px; box-shadow: 0 10px 30px rgba(255, 182, 193, 0.3); border: 2px solid #FFC0CB; }
-        .header { text-align: center; border-bottom: 2px dashed #FFB6C1; padding-bottom: 20px; margin-bottom: 30px; }
+        .container { max-width: 1200px; margin: 0 auto; background: white; padding: 30px; border-radius: 20px; box-shadow: 0 10px 30px rgba(255, 182, 193, 0.3); border: 2px solid #FFC0CB; }
+        
+        .header { text-align: center; border-bottom: 2px dashed #FFB6C1; padding-bottom: 20px; margin-bottom: 30px; position: relative; }
         .header h1 { color: #FF69B4; margin: 0; font-size: 2.5em; text-transform: uppercase; letter-spacing: 2px; }
         
+        /* Butonul nou din dreapta sus pentru istoric */
+        .btn-istoric { position: absolute; top: 10px; right: 10px; background: white; color: #FF1493; border: 2px solid #FF1493; padding: 10px 15px; border-radius: 20px; font-weight: bold; text-decoration: none; transition: 0.3s; }
+        .btn-istoric:hover { background: #FF1493; color: white; }
+
         .stats-grid { background: #FFF9FA; padding: 15px; border-radius: 15px; margin-bottom: 30px; text-align: center; }
         .stat-value { display: block; font-size: 1.5em; font-weight: bold; color: #FF1493; }
         .stat-label { font-size: 0.8em; color: #888; text-transform: uppercase; }
 
-        h2 { color: #FF69B4; border-left: 5px solid #FF69B4; padding-left: 15px; margin-bottom: 20px; }
+        /* NOU: Containerul pentru bara de cautare si filtre */
+        .filters-container { display: flex; gap: 15px; margin-bottom: 20px; }
+        .filter-input { flex: 2; padding: 15px; font-size: 1.1em; border-radius: 10px; border: 2px solid #FFB6C1; outline: none; transition: 0.3s; background: #fff; }
+        .filter-input:focus { border-color: #FF1493; box-shadow: 0 0 10px rgba(255, 20, 147, 0.2); }
+        .filter-select { flex: 1; padding: 15px; font-size: 1em; border-radius: 10px; border: 2px solid #FFB6C1; outline: none; background: #fff; color: #555; cursor: pointer; }
+
         table { width: 100%; border-collapse: separate; border-spacing: 0 10px; }
         th { background: #FFB6C1; color: white; padding: 15px; text-align: left; text-transform: uppercase; font-size: 0.9em; border-radius: 10px; }
-        
-        td { padding: 15px; background: #fff; border-top: 1px solid #FFE4E1; border-bottom: 1px solid #FFE4E1; }
+        td { padding: 15px; background: #fff; border-top: 1px solid #FFE4E1; border-bottom: 1px solid #FFE4E1; vertical-align: middle; }
         tr td:first-child { border-left: 1px solid #FFE4E1; border-radius: 10px 0 0 10px; font-weight: bold; }
         tr td:last-child { border-right: 1px solid #FFE4E1; border-radius: 0 10px 10px 0; text-align: center; }
 
@@ -26,107 +36,248 @@
         .details-row td { border: 1px solid #FFB6C1 !important; border-radius: 10px; padding: 20px; }
         .details-content { display: flex; justify-content: space-between; align-items: center; }
 
-        .btn-detalii { background: #FF69B4; color: white; border: none; padding: 10px 20px; border-radius: 20px; font-size: 0.9em; cursor: pointer; transition: 0.3s; }
-        .btn-detalii:hover { background: #FF1493; transform: scale(1.05); }
-        
-        .link-extern { color: #FF1493; font-weight: bold; text-decoration: none; border-bottom: 1px solid #FF1493; }
-        .link-extern:hover { color: #4A4A4A; border-color: #4A4A4A; }
+        .btn-detalii { background: #FFB6C1; color: white; border: none; padding: 10px 20px; border-radius: 20px; font-size: 0.9em; cursor: pointer; transition: 0.3s; margin-right: 5px; }
+        .btn-detalii:hover { background: #FF69B4; transform: scale(1.05); }
+        .btn-rezerva { background: #FF1493; color: white; border: none; padding: 12px 25px; border-radius: 20px; font-size: 1em; font-weight: bold; cursor: pointer; transition: 0.3s; }
+        .btn-rezerva:hover { background: #C71585; transform: scale(1.05); }
+        .link-extern { color: #FF1493; font-weight: bold; text-decoration: none; border-bottom: 1px solid #FF1493; padding: 5px; }
+        .link-hotel { color: #FF69B4; text-decoration: none; font-weight: bold; }
 
-        .footer-nav { margin-top: 40px; text-align: center; }
-        .btn-logout { color: #888; text-decoration: none; font-size: 0.9em; }
+        /* MODALE */
+        .modal-overlay { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0, 0, 0, 0.5); z-index: 1000; align-items: center; justify-content: center; backdrop-filter: blur(3px); }
+        .modal-box { background: white; padding: 30px; border-radius: 20px; border: 3px solid #FF69B4; position: relative; box-shadow: 0 15px 40px rgba(0,0,0,0.2); }
+        .modal-box-plata { width: 480px; max-height: 90vh; overflow-y: auto; }
+        .modal-box-succes { width: 350px; text-align: center; }
+        .modal-close { position: absolute; top: 15px; right: 20px; font-size: 1.5em; cursor: pointer; color: #FF1493; font-weight: bold; }
+        .modal-box h2 { color: #FF1493; margin-top: 0; border-bottom: 2px dashed #FFB6C1; padding-bottom: 10px; text-align: center; text-transform: uppercase; }
+        
+        .form-group { margin-bottom: 15px; }
+        .form-group label { display: block; font-size: 0.9em; font-weight: bold; color: #555; margin-bottom: 5px; text-align: left; }
+        .form-group input { width: 100%; padding: 10px; border: 1px solid #ddd; border-radius: 5px; box-sizing: border-box; background: #fafafa; outline: none; }
+        .row-group { display: flex; gap: 15px; }
+        .row-group .form-group { flex: 1; }
+        .btn-plateste { background: #FF1493; color: white; width: 100%; border: none; padding: 15px; border-radius: 10px; font-weight: bold; font-size: 1.1em; cursor: pointer; margin-top: 10px; text-transform: uppercase; }
     </style>
 </head>
 <body>
     <div class="container">
         <div class="header">
+            <a href="/travel/rezervari" class="btn-istoric">🎒 Rezervarile Mele</a>
             <h1>Pink Travel</h1>
+            <p style="color: #FF1493;">Explorator: <b><%= userName %></b></p>
         </div>
 
         <div class="stats-grid">
-            <span class="stat-value"><%= (typeof lastVisited !== 'undefined') ? lastVisited : 'Niciuna' %></span>
+            <span class="stat-value" id="lastDestBox"><%= (typeof lastVisited !== 'undefined') ? lastVisited : 'Niciuna' %></span>
             <span class="stat-label">Ultima Destinatie Vizualizata</span>
         </div>
 
-        <h2>Destinatii Populare</h2>
+        <div class="filters-container">
+            <input type="text" id="searchBar" class="filter-input" onkeyup="filterTable()" placeholder="🔍 Cauta locatie sau hotel...">
+            
+            <select id="filtruRegiune" class="filter-select" onchange="filterTable()">
+                <option value="toate">🌍 Toate Regiunile</option>
+                <option value="europa">Europa</option>
+                <option value="asia">Asia / Orient</option>
+                <option value="america">America / Caraibe</option>
+                <option value="africa">Africa</option>
+            </select>
+
+            <select id="filtruBuget" class="filter-select" onchange="filterTable()">
+                <option value="toate">💰 Orice Buget</option>
+                <option value="sub1000">Sub 1000 EUR</option>
+                <option value="peste1000">Peste 1000 EUR</option>
+            </select>
+        </div>
+
         <table>
             <thead>
                 <tr>
                     <th>Locatie</th>
                     <th>Regiune</th>
+                    <th>Durata (Zile/Nopti)</th>
+                    <th>Cazare & Masa</th>
                     <th>Actiune</th>
                 </tr>
             </thead>
-            <tbody>
-                <!-- PARIS -->
-                <tr>
-                    <td>Paris</td>
-                    <td>Europa / Franta</td>
-                    <td><button class="btn-detalii" onclick="toggleDetails('paris', 'Paris')">Vezi Detalii</button></td>
-                </tr>
-                <tr id="details-paris" class="details-row">
-                    <td colspan="3">
-                        <div class="details-content">
-                            <span>Pret: <b>500 EUR</b></span>
-                            <a href="https://destinationlesstravel.com/best-things-to-do-in-paris/" target="_blank" class="link-extern">Deschide Ghid Turistic</a>
-                        </div>
-                    </td>
-                </tr>
-
-                <!-- MALDIVE -->
-                <tr>
-                    <td>Maldive</td>
-                    <td>Asia / Oceanul Indian</td>
-                    <td><button class="btn-detalii" onclick="toggleDetails('maldive', 'Maldive')">Vezi Detalii</button></td>
-                </tr>
-                <tr id="details-maldive" class="details-row">
-                    <td colspan="3">
-                        <div class="details-content">
-                            <span>Pret: <b>1200 EUR</b></span>
-                            <a href="https://www.visitmaldives.com" target="_blank" class="link-extern">Deschide Ghid Turistic</a>
-                        </div>
-                    </td>
-                </tr>
-
-                <!-- SARDINIA -->
-                <tr>
-                    <td>Sardinia</td>
-                    <td>Europa / Italia</td>
-                    <td><button class="btn-detalii" onclick="toggleDetails('sardinia', 'Sardinia')">Vezi Detalii</button></td>
-                </tr>
-                <tr id="details-sardinia" class="details-row">
-                    <td colspan="3">
-                        <div class="details-content">
-                            <span>Pret: <b>800 EUR</b></span>
-                            <a href="https://www.sardegnaturismo.it" target="_blank" class="link-extern">Deschide Ghid Turistic</a>
-                        </div>
-                    </td>
-                </tr>
+            <tbody id="destinatiiTable">
+                <% destinatii.forEach(function(item) { %>
+                    <tr class="main-row" data-id="<%= item.id %>" data-pret="<%= parseInt(item.pret) %>">
+                        <td><%= item.nume %></td>
+                        <td><%= item.descriere %></td>
+                        <td><b><%= item.zile %> zile</b> / <%= item.nopti %> nopti</td>
+                        <td>
+                            🏨 <a href="<%= item.linkHotel %>" target="_blank" class="link-hotel"><%= item.hotel %></a><br>
+                            <span style="font-size: 0.9em; color: #555;">🍽️ <%= item.regim %></span>
+                        </td>
+                        <td>
+                            <button class="btn-detalii" onclick="toggleDetails('<%= item.id %>', '<%= item.nume %>')">Vezi Pret</button>
+                        </td>
+                    </tr>
+                    
+                    <tr id="details-<%= item.id %>" class="details-row">
+                        <td colspan="5">
+                            <div class="details-content">
+                                <div>
+                                    <a href="<%= item.link %>" target="_blank" class="link-extern">🌍 Deschide Ghid Turistic Oficial</a>
+                                </div>
+                                <div style="text-align: right;">
+                                    <span style="font-size: 1.1em; color: #888; margin-right: 15px;">Total Pachet: <b style="color: #FF1493; font-size: 1.5em;"><%= item.pret %></b></span>
+                                    <button class="btn-rezerva" onclick="deschideModalRezervare('<%= item.nume %>', '<%= item.pret %>')">Rezerva Acum </button>
+                                </div>
+                            </div>
+                        </td>
+                    </tr>
+                <% }); %>
             </tbody>
         </table>
 
-        <div class="footer-nav">
-            <a href="/logout" class="btn-logout">Deconectare (Logout)</a>
+        <div style="margin-top: 40px; text-align: center;">
+            <a href="/logout" style="color: #888; text-decoration: none; font-size: 0.9em;">Deconectare (Logout)</a>
+        </div>
+    </div>
+
+    <div id="modalRezervare" class="modal-overlay">
+        <div class="modal-box modal-box-plata">
+            <span class="modal-close" onclick="inchideModalRezervare()">✖</span>
+            <h2>Detalii Plata</h2>
+            
+            <div style="background: #FFF5F8; padding: 10px; border-radius: 10px; margin-bottom: 20px; text-align: center; color: #555;">
+                <p style="margin: 5px 0;">Destinatie: <b id="modalDestinatieNume">---</b></p>
+                <p style="margin: 5px 0;">Suma de plata: <b id="modalDestinatiePret" style="color: #FF1493; font-size: 1.2em;">---</b></p>
+            </div>
+
+            <form id="formPlata" onsubmit="proceseazaPlata(event)">
+                <div class="row-group">
+                    <div class="form-group">
+                        <label>Nume Titular</label>
+                        <input type="text" value="<%= userName %>" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Numar de Telefon</label>
+                        <input type="tel" placeholder="07xx xxx xxx" required pattern="[0-9]{10}">
+                    </div>
+                </div>
+                
+                <div class="form-group">
+                    <label>Numar Card Bancar</label>
+                    <input type="text" placeholder="1234 5678 9101 1121" maxlength="16" required pattern="\d{16}">
+                </div>
+
+                <div class="row-group">
+                    <div class="form-group">
+                        <label>Expirare</label>
+                        <input type="text" placeholder="LL/AA" maxlength="5" required>
+                    </div>
+                    <div class="form-group">
+                        <label>CVV</label>
+                        <input type="password" placeholder="***" maxlength="3" required pattern="\d{3}">
+                    </div>
+                </div>
+
+                <button type="submit" class="btn-plateste">Confirma si Plateste</button>
+            </form>
+        </div>
+    </div>
+
+    <div id="modalSucces" class="modal-overlay">
+        <div class="modal-box modal-box-succes">
+            <div style="font-size: 4em; color: #32CD32; margin-bottom: 10px;">✔</div>
+            <h2>Felicitari!</h2>
+            <p id="succesMesaj" style="color: #555; line-height: 1.5; margin-bottom: 25px;"></p>
+            <button class="btn-rezerva" onclick="inchideModalSucces()" style="width: 100%;">Continua</button>
         </div>
     </div>
 
     <script>
         function toggleDetails(id, nume) {
             const row = document.getElementById('details-' + id);
-            
-            // Inchide alte randuri deschise
             document.querySelectorAll('.details-row').forEach(r => {
                 if(r.id !== 'details-' + id) r.style.display = 'none';
             });
-
-            // Toggle randul curent
             if (row.style.display === 'table-row') {
                 row.style.display = 'none';
             } else {
                 row.style.display = 'table-row';
-                
-                // Trimite cerere la server pentru a actualiza "Ultima Destinatie" fara sa reincarce pagina
-                fetch('/travel/update-last-visited/' + nume);
+                fetch('/travel/update-last-visited/' + nume).then(() => {
+                    document.getElementById('lastDestBox').innerText = nume;
+                });
             }
+        }
+
+        // --- FILTRAREA INTELIGENTA (Trei criterii simultan) ---
+        function filterTable() {
+            const search = document.getElementById('searchBar').value.toLowerCase();
+            const regiune = document.getElementById('filtruRegiune').value;
+            const buget = document.getElementById('filtruBuget').value;
+            
+            const rows = document.querySelectorAll('.main-row');
+            
+            rows.forEach(row => {
+                const text = row.innerText.toLowerCase();
+                // Extragem pretul curat (ex: din "500 EUR" luam doar numarul 500 din html data-pret)
+                const pretVal = parseInt(row.getAttribute('data-pret'));
+                
+                // Verificam cautarea din bara de text
+                let passSearch = text.includes(search);
+                
+                // Verificam Regiunea
+                let passRegiune = true;
+                if (regiune === 'europa' && !text.includes('europa')) passRegiune = false;
+                if (regiune === 'asia' && !(text.includes('asia') || text.includes('orient'))) passRegiune = false;
+                if (regiune === 'america' && !(text.includes('america') || text.includes('caraibe'))) passRegiune = false;
+                if (regiune === 'africa' && !text.includes('africa')) passRegiune = false;
+
+                // Verificam Bugetul
+                let passBuget = true;
+                if (buget === 'sub1000' && pretVal >= 1000) passBuget = false;
+                if (buget === 'peste1000' && pretVal < 1000) passBuget = false;
+
+                // Daca trece toate testele, il afisam!
+                if (passSearch && passRegiune && passBuget) {
+                    row.style.display = 'table-row';
+                } else {
+                    row.style.display = 'none';
+                    const destId = row.getAttribute('data-id');
+                    const detailsRow = document.getElementById('details-' + destId);
+                    if (detailsRow) detailsRow.style.display = 'none'; 
+                }
+            });
+        }
+
+        function deschideModalRezervare(numeDestinatie, pretDestinatie) {
+            document.getElementById('modalDestinatieNume').innerText = numeDestinatie;
+            document.getElementById('modalDestinatiePret').innerText = pretDestinatie;
+            document.getElementById('modalRezervare').style.display = 'flex';
+        }
+
+        function inchideModalRezervare() {
+            document.getElementById('modalRezervare').style.display = 'none';
+        }
+
+        // --- SALVAREA COMENZII IN BAZA DE DATE ---
+        function proceseazaPlata(event) {
+            event.preventDefault(); 
+            
+            const destinatie = document.getElementById('modalDestinatieNume').innerText;
+            const pret = document.getElementById('modalDestinatiePret').innerText;
+
+            // Trimitem datele catre server pentru a fi salvate in istoric
+            fetch('/travel/rezerva', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+                body: 'destinatie=' + encodeURIComponent(destinatie) + '&pret=' + encodeURIComponent(pret)
+            }).then(() => {
+                // Dupa ce serverul a confirmat salvarea, afisam bifa verde!
+                document.getElementById('succesMesaj').innerHTML = "Biletul catre <b>" + destinatie + "</b> a fost confirmat.<br><br>Poti vedea confirmarea in rubrica <i>Rezervarile Mele</i>.";
+                inchideModalRezervare();
+                document.getElementById('modalSucces').style.display = 'flex';
+                document.getElementById('formPlata').reset();
+            });
+        }
+
+        function inchideModalSucces() {
+            document.getElementById('modalSucces').style.display = 'none';
         }
     </script>
 </body>

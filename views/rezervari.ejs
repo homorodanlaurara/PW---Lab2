@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="ro">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pink Travel - Istoric Rezervari</title>
+    <style>
+        body { background-color: #FFF5F8; font-family: 'Segoe UI', sans-serif; margin: 0; padding: 20px; color: #4A4A4A; }
+        .container { max-width: 800px; margin: 0 auto; background: white; padding: 30px; border-radius: 20px; box-shadow: 0 10px 30px rgba(255, 182, 193, 0.3); border: 2px solid #FFC0CB; }
+        .header { text-align: center; border-bottom: 2px dashed #FFB6C1; padding-bottom: 20px; margin-bottom: 30px; }
+        .header h1 { color: #FF69B4; margin: 0; font-size: 2.5em; text-transform: uppercase; letter-spacing: 2px; }
+        
+        table { width: 100%; border-collapse: collapse; margin-top: 20px; }
+        th { background: #FF1493; color: white; padding: 15px; text-align: left; }
+        td { padding: 15px; border-bottom: 1px solid #FFE4E1; }
+        tr:hover { background-color: #FFF9FA; }
+        
+        .empty-state { text-align: center; padding: 40px; color: #888; font-style: italic; }
+        .btn-inapoi { display: inline-block; background: #FFB6C1; color: white; border: none; padding: 12px 25px; border-radius: 20px; font-weight: bold; cursor: pointer; text-decoration: none; margin-top: 20px; transition: 0.3s; }
+        .btn-inapoi:hover { background: #FF69B4; transform: scale(1.05); }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>Istoric Rezervari</h1>
+            <p>Cont activ: <b><%= userName %></b></p>
+        </div>
+
+        <% if (rezervari.length === 0) { %>
+            <div class="empty-state">
+                <h2>Nu ai cumparat nicio vacanta inca.</h2>
+                <p>Mergi inapoi la sectiunea de oferte si alege-ti destinatia de vis!</p>
+            </div>
+        <% } else { %>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Data Achizitiei</th>
+                        <th>Destinatie</th>
+                        <th>Suma Platita</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <% rezervari.forEach(function(rez) { %>
+                        <tr>
+                            <td><%= rez.data %></td>
+                            <td><b><%= rez.destinatie %></b></td>
+                            <td style="color: #FF1493; font-weight: bold;"><%= rez.pret %></td>
+                        </tr>
+                    <% }); %>
+                </tbody>
+            </table>
+        <% } %>
+
+        <div style="text-align: center; margin-top: 30px;">
+            <a href="/travel/protected" class="btn-inapoi">Inapoi la Oferte</a>
+        </div>
+    </div>
+</body>
+</html>

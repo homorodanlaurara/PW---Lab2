@@ -1,1 +1,3 @@
-module.exports = [];
+const users = [];
+
+module.exports = users;
